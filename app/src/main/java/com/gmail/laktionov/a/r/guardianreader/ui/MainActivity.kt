@@ -1,7 +1,8 @@
-package com.gmail.laktionov.a.r.guardianreader
+package com.gmail.laktionov.a.r.guardianreader.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.gmail.laktionov.a.r.guardianreader.R
 
 class MainActivity : AppCompatActivity() {
 

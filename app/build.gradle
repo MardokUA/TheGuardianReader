@@ -46,6 +46,10 @@ android {
         versionCode versionCode
         versionName versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //Urls
+        buildConfigField "String", "API_KEY", "30ff8406-fb73-4649-bfda-4ac9b2e56bbc"
+        buildConfigField "String", "BASE_URL", "https://content.guardianapis.com"
     }
     buildTypes {
         release {
