@@ -47,13 +47,16 @@ android {
         versionName versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        //enable vectors
+        vectorDrawables.useSupportLibrary = true
+
         //Urls
-        buildConfigField "String", "API_KEY", "30ff8406-fb73-4649-bfda-4ac9b2e56bbc"
-        buildConfigField "String", "BASE_URL", "https://content.guardianapis.com"
+        buildConfigField "String", "API_KEY", '"30ff8406-fb73-4649-bfda-4ac9b2e56bbc"'
+        buildConfigField "String", "BASE_URL", '"https://content.guardianapis.com"'
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 

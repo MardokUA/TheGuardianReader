@@ -1,13 +1,11 @@
 package com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.preference
 
-import android.content.Context
+import android.content.SharedPreferences
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.KeyValueStorage
 
-class SharedPrefs(context: Context) : KeyValueStorage {
-
-    private val preferences = context.getSharedPreferences(SHARED_STORAGE, Context.MODE_PRIVATE)
+class SharedPrefs(private val sharedPrefs: SharedPreferences) : KeyValueStorage {
 
     companion object {
-        private const val SHARED_STORAGE = "guardian_storage"
+        const val SHARED_STORAGE = "guardian_storage"
     }
 }
