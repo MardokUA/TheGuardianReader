@@ -24,6 +24,8 @@
             android:id="@+id/articleImage"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +47,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/articleImage"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Биз баарыбыз кайсы бир даражада курмандыктарбыз':Эмнеге Бишкектеги гей клубтар жабылды" />
+            tools:text="test title" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/articleSection"
@@ -64,7 +66,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/articleImage"
             app:layout_constraintTop_toBottomOf="@id/articleTitle"
-            tools:text="Биз баарыбыз кайсы бир даражада курмандыктарбыз':Эмнеге Бишкектеги гей клубтар жабылды" />
+            tools:text="test section" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
