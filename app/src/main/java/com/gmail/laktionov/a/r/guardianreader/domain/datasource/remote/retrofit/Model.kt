@@ -18,17 +18,18 @@ data class AllArticleResponse(override val status: String,
                               val orderBy: String,
                               val results: List<ArticleResponse>) : GuardianResponse
 
-data class SingleArticleResponse(override val status: String,
-                                 override val userTier: String,
-                                 override val total: Int,
-                                 @SerializedName("content") val data: ArticleResponse) : GuardianResponse
-
-
 data class ArticleResponse(val id: String,
                            val sectionId: String,
                            val sectionName: String,
                            val webPublicationDate: String,
                            val webTitle: String,
                            val webUrl: String,
-                           val apiUrl: String)
+                           val apiUrl: String,
+                           val isHosted: Boolean,
+                           val pillarId: String,
+                           @SerializedName("fields") val additionalField: AdditionalFields,
+                           val pillarName: String)
+
+data class AdditionalFields(@SerializedName("body") val rawText: String,
+                            @SerializedName("thumbnail") val image: String)
 
