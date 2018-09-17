@@ -7,21 +7,10 @@ import android.view.ViewGroup
 import com.gmail.laktionov.a.r.guardianreader.R
 import com.gmail.laktionov.a.r.guardianreader.domain.ArticleItem
 
-class ArticleAdapter : PagedListAdapter<ArticleItem, ArticleViewHolder>(DIFF_CALLBACK) {
-
-    enum class Type(val value: Int) { RAW(1), PINTRESS(2) }
-
-    private var currentType: Type = Type.RAW
-
-    override fun getItemViewType(position: Int): Int {
-        return currentType.value
-    }
+class RawAdapter : PagedListAdapter<ArticleItem, ArticleViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        return when (viewType) {
-            Type.RAW.value -> RawViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_article_raw_item, parent, false))
-            else -> PintressViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_article_pintres_item, parent, false))
-        }
+        return RawViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_article_raw_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
@@ -29,10 +18,6 @@ class ArticleAdapter : PagedListAdapter<ArticleItem, ArticleViewHolder>(DIFF_CAL
         if (currentArticle != null) {
             holder.bind(currentArticle)
         }
-    }
-
-    fun swapAdapterType() {
-        currentType = if (currentType == Type.RAW) Type.PINTRESS else Type.RAW
     }
 
     companion object {

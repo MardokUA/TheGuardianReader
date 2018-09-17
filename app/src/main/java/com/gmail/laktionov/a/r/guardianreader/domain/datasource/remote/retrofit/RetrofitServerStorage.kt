@@ -23,7 +23,7 @@ class RetrofitServerStorage(private val serverApi: ServerApi) : RemoteSource {
                         section = response.sectionName,
                         sectionId = response.sectionId,
                         title = response.webTitle,
-                        image = response.additionalField.image,
+                        image = response.additionalField.image ?: "",
                         text = response.additionalField.rawText)
     }
 }

@@ -42,5 +42,5 @@ data class ArticleResponse(val id: String,
                            val pillarName: String)
 
 data class AdditionalFields(@SerializedName("bodyText") val rawText: String,
-                            @SerializedName("thumbnail") val image: String)
+                            @SerializedName("thumbnail") val image: String?)
 

@@ -18,7 +18,11 @@ class MainViewModel(private val repository: Repository,
             .setEnablePlaceholders(IS_PLACEHOLDERS_NEEDED)
             .build()
 
-    fun observeArticles(): LiveData<PagedList<ArticleItem>> = transformPersistedResult()
+    private val articlesData: LiveData<PagedList<ArticleItem>> = transformPersistedResult()
+
+    fun observeArticles(): LiveData<PagedList<ArticleItem>> = articlesData
+
+    fun getArticles() = articlesData.value
 
     private fun transformPersistedResult(): LiveData<PagedList<ArticleItem>> {
         return LivePagedListBuilder(repository.getArticles(), paginationConfig)
@@ -28,7 +32,7 @@ class MainViewModel(private val repository: Repository,
 
     companion object {
         private const val PAGE_SIZE = 10
-        private const val PREFETCH_DISTANCE = 3
+        private const val PREFETCH_DISTANCE = 5
         private const val IS_PLACEHOLDERS_NEEDED = true
     }
 }
