@@ -7,9 +7,10 @@ import com.gmail.laktionov.a.r.guardianreader.domain.datasource.remote.retrofit.
 
 class RetrofitServerStorage(private val serverApi: ServerApi) : RemoteSource {
 
-    override suspend fun getAllArticles(): List<ArticleItem> {
-        val response = serverApi.getAllArticles().await()
-        return if (response.isOk()) response.data!!.results.map { item ->
+    override suspend fun getAllArticles(page: Int): List<ArticleItem> {
+        val response = serverApi.getAllArticles(page).await()
+
+        return if (response.isOk()) response.data!!.response.results.map { item ->
             mapToArticle(item)
         } else mutableListOf()
     }

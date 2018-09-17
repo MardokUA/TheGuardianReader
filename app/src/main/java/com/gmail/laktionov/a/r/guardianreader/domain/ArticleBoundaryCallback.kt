@@ -5,7 +5,7 @@ import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 import kotlin.coroutines.experimental.CoroutineContext
 
-class ArticleBoundaryCallback(private val remoteRequest: suspend () -> List<ArticleItem>,
+class ArticleBoundaryCallback(private val remoteRequest: suspend (page: Int) -> List<ArticleItem>,
                               private val insert: (List<ArticleItem>) -> Unit,
                               private val bgContext: CoroutineContext = CommonPool) : PagedList.BoundaryCallback<ArticleItem>() {
 
@@ -23,11 +23,13 @@ class ArticleBoundaryCallback(private val remoteRequest: suspend () -> List<Arti
 
     private fun getDataAndSave() {
         if (isRequestInProgress) return
+
         launch(bgContext) {
             isRequestInProgress = true
-            val response = remoteRequest()
+            val response = remoteRequest(lastRequestedPage)
             if (response.isNotEmpty()) {
                 insert(response)
+                lastRequestedPage++
                 isRequestInProgress = false
             }
         }

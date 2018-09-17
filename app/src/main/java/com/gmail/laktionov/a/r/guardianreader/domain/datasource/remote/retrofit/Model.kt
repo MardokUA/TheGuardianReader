@@ -17,6 +17,8 @@ interface GuardianResponse {
     val total: Int
 }
 
+data class GuardianBaseResponse(val response: AllArticleResponse)
+
 data class AllArticleResponse(override val status: String,
                               override val userTier: String,
                               override val total: Int,
@@ -39,6 +41,6 @@ data class ArticleResponse(val id: String,
                            @SerializedName("fields") val additionalField: AdditionalFields,
                            val pillarName: String)
 
-data class AdditionalFields(@SerializedName("body") val rawText: String,
+data class AdditionalFields(@SerializedName("bodyText") val rawText: String,
                             @SerializedName("thumbnail") val image: String)
 

@@ -16,7 +16,7 @@ class GuardianRepository(private val remoteStorage: RemoteStorage,
     }
 
     override fun getBoundaryCallback(): PagedList.BoundaryCallback<ArticleItem> {
-        return ArticleBoundaryCallback({ remoteStorage.getAllArticles() }, { localStorage.saveArticles(it) })
+        return ArticleBoundaryCallback({ page -> remoteStorage.getAllArticles(page) }, { localStorage.saveArticles(it) })
     }
 
     object ArticleMapper {
