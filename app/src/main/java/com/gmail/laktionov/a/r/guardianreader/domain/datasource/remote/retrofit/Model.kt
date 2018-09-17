@@ -2,6 +2,15 @@ package com.gmail.laktionov.a.r.guardianreader.domain.datasource.remote.retrofit
 
 import com.google.gson.annotations.SerializedName
 
+
+/**
+ * Simple wrapper class for Retrofit calls
+ * Any error handle can be add here
+ */
+class BaseResponse<T>(val data: T?) {
+    fun isOk() = data != null
+}
+
 interface GuardianResponse {
     val status: String
     val userTier: String

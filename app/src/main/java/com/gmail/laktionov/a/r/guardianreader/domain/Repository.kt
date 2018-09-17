@@ -1,9 +1,11 @@
 package com.gmail.laktionov.a.r.guardianreader.domain
 
 import android.arch.paging.DataSource
-import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.room.Article
+import android.arch.paging.PagedList
 
 interface Repository {
 
-    fun getArticles(): DataSource.Factory<Int, Article>
+    fun getArticles(): DataSource.Factory<Int, ArticleItem>
+
+    fun getBoundaryCallback(): PagedList.BoundaryCallback<ArticleItem>
 }

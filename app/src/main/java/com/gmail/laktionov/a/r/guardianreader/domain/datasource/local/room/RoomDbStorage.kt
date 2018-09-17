@@ -7,8 +7,9 @@ class RoomDbStorage(private val db: GuardianDatabase) : DBStorage {
 
     override fun getAllArticles(): DataSource.Factory<Int, Article> = db.getDao().getAllArticles()
 
+    override fun saveArticles(data: List<Article>) = db.getDao().insert(data)
+
     companion object {
         const val DB_NAME = "guardian.db"
     }
-
 }

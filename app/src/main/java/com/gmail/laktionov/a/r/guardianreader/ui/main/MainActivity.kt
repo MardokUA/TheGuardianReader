@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.gmail.laktionov.a.r.guardianreader.R
 import com.gmail.laktionov.a.r.guardianreader.core.obtainViewModel
+import com.gmail.laktionov.a.r.guardianreader.domain.ArticleItem
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                 Observer { data -> data?.let { showData(it) } })
     }
 
-    private fun showData(data: PagedList<ArticleListItem>) {
+    private fun showData(data: PagedList<ArticleItem>) {
         Log.w("MainActivity", "$data")
     }
 }

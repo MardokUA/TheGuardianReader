@@ -6,4 +6,5 @@ import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.room.Artic
 interface DBStorage {
 
     fun getAllArticles(): DataSource.Factory<Int, Article>
+    fun saveArticles(data: List<Article>)
 }
