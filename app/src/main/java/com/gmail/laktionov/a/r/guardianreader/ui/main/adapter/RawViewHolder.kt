@@ -7,10 +7,13 @@ import kotlinx.android.synthetic.main.view_article_raw_item.view.*
 
 class RawViewHolder(itemView: View) : ArticleViewHolder(itemView) {
 
-    override fun bind(item: ArticleItem) = with(itemView) {
+    override fun bind(item: ArticleItem,
+                      clickHandler: ((String) -> Unit)?) = with(itemView) {
 
         articleTitle.text = item.title
         articleSection.text = item.section
+
+        clickHandler?.let { handler -> itemView.setOnClickListener { handler(item.articleId) } }
 
         if (item.image.isNotEmpty()) {
             Picasso.get().cancelRequest(articleImage)

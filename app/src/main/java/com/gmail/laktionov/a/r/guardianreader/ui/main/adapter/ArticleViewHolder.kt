@@ -6,5 +6,5 @@ import com.gmail.laktionov.a.r.guardianreader.domain.ArticleItem
 
 abstract class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    abstract fun bind(item: ArticleItem)
+    abstract fun bind(item: ArticleItem, clickHandler: ((String) -> Unit)?)
 }

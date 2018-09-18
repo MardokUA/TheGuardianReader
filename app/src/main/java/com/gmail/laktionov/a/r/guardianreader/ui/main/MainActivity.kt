@@ -11,6 +11,7 @@ import com.gmail.laktionov.a.r.guardianreader.R
 import com.gmail.laktionov.a.r.guardianreader.core.obtainViewModel
 import com.gmail.laktionov.a.r.guardianreader.domain.ArticleItem
 import com.gmail.laktionov.a.r.guardianreader.domain.PinedItem
+import com.gmail.laktionov.a.r.guardianreader.ui.details.ArticleDetailsActivity
 import com.gmail.laktionov.a.r.guardianreader.ui.main.adapter.PinedAdapter
 import com.gmail.laktionov.a.r.guardianreader.ui.main.adapter.PintressAdapter
 import com.gmail.laktionov.a.r.guardianreader.ui.main.adapter.RawAdapter
@@ -19,9 +20,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
-    private val rawAdapter by lazy { RawAdapter() }
-    private val pintressAdapter by lazy { PintressAdapter() }
-    private val pinedAdapter by lazy { PinedAdapter() }
+    private val rawAdapter by lazy { RawAdapter().addClickListener { id -> showContent(id) } }
+    private val pintressAdapter by lazy { PintressAdapter().addClickListener { id -> showContent(id) } }
+    private val pinedAdapter by lazy { PinedAdapter().addClickListener { id -> showContent(id) } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +32,7 @@ class MainActivity : AppCompatActivity() {
         setupView()
         setupObservers()
     }
-
-
+    
     private fun setupView() {
         mainSwapViewButton.setOnClickListener { view ->
             view.isSelected = !view.isSelected
@@ -80,5 +80,9 @@ class MainActivity : AppCompatActivity() {
         } else {
             pintressAdapter.submitList(data)
         }
+    }
+
+    private fun showContent(articleId: String) {
+        startActivity(ArticleDetailsActivity.createIntent(this, articleId))
     }
 }
