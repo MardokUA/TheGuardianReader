@@ -59,7 +59,7 @@ const val SNACK_SHOW_TIME = 250
 fun View.showSnackbar(snackbarText: String,
                       timeLength: Int = SNACK_SHOW_TIME,
                       @ColorRes backgroundColor: Int = R.color.colorAccentSecond) {
-    with(Snackbar.make(this, snackbarText, timeLength)) {
+    with(Snackbar.make(this, snackbarText, SNACK_SHOW_TIME)) {
         view.setBackgroundResource(backgroundColor)
         show()
     }
