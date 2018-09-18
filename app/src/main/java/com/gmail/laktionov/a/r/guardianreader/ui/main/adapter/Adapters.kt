@@ -92,7 +92,7 @@ val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ArticleItem>() {
             oldItem?.articleId == newItem?.articleId
 
     override fun areContentsTheSame(oldItem: ArticleItem?, newItem: ArticleItem?) =
-            oldItem == newItem
+            oldItem?.image == newItem?.image && oldItem?.title == newItem?.title && oldItem?.section == oldItem?.section
 }
 
 /**
