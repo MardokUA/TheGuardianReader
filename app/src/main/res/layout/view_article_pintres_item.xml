@@ -6,27 +6,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="184dp"
-    android:layout_margin="4dp"
-    android:background="@android:color/white">
+    android:layout_margin="2dp">
 
     <android.support.constraint.Guideline
-        android:id="@+id/titleHorizontalGuideline"
+        android:id="@+id/horizontalGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.75" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/titleVerticalGuideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.60" />
-
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/pintressImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:cropToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,25 +29,26 @@
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/pinrressTitle"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="4dp"
+        android:background="@android:color/white"
         android:ellipsize="end"
         android:maxLines="2"
         android:textColor="@color/colorAccentSecond"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/titleVerticalGuideline"
-        app:layout_constraintStart_toStartOf="@id/pintressImage"
-        app:layout_constraintTop_toBottomOf="@id/titleHorizontalGuideline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuideline"
         tools:text="Newcastle v Arsenal, Manchester City v Fulham: clockwatch – live!" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/pintressSelection"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -67,9 +62,8 @@
         android:textColor="@android:color/white"
         android:textSize="12sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/pintressImage"
-        app:layout_constraintStart_toStartOf="@id/titleVerticalGuideline"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Football" />
 
 </android.support.constraint.ConstraintLayout>

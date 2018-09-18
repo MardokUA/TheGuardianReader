@@ -4,6 +4,7 @@ import android.arch.paging.PagedListAdapter
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.gmail.laktionov.a.r.guardianreader.R
 import com.gmail.laktionov.a.r.guardianreader.domain.ArticleItem
@@ -17,8 +18,8 @@ import com.gmail.laktionov.a.r.guardianreader.domain.PinedItem
 class PinedAdapter(private val pinedList: MutableList<PinedItem> = mutableListOf()) :
         RecyclerView.Adapter<PinedViewHolder>() {
 
-    private var clickHandler: ((String) -> Unit)? = null
-    fun addClickListener(clickHandler: (String) -> Unit) = apply { this.clickHandler = clickHandler }
+    private var clickHandler: ((String, View) -> Unit)? = null
+    fun addClickListener(clickHandler: (String, View) -> Unit) = apply { this.clickHandler = clickHandler }
 
     fun updateList(newList: List<PinedItem>) {
         val result = DiffUtil.calculateDiff(PinedDiffCallback(pinedList, newList))
@@ -42,8 +43,8 @@ class PinedAdapter(private val pinedList: MutableList<PinedItem> = mutableListOf
 
 class PintressAdapter : PagedListAdapter<ArticleItem, ArticleViewHolder>(DIFF_CALLBACK) {
 
-    private var clickHandler: ((String) -> Unit)? = null
-    fun addClickListener(clickHandler: (String) -> Unit) = apply { this.clickHandler = clickHandler }
+    private var clickHandler: ((String, View) -> Unit)? = null
+    fun addClickListener(clickHandler: (String, View) -> Unit) = apply { this.clickHandler = clickHandler }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         return PintressViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_article_pintres_item, parent, false))
@@ -63,8 +64,8 @@ class PintressAdapter : PagedListAdapter<ArticleItem, ArticleViewHolder>(DIFF_CA
 
 class RawAdapter : PagedListAdapter<ArticleItem, ArticleViewHolder>(DIFF_CALLBACK) {
 
-    private var clickHandler: ((String) -> Unit)? = null
-    fun addClickListener(clickHandler: (String) -> Unit) = apply { this.clickHandler = clickHandler }
+    private var clickHandler: ((String, View) -> Unit)? = null
+    fun addClickListener(clickHandler: (String, View) -> Unit) = apply { this.clickHandler = clickHandler }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         return RawViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_article_raw_item, parent, false))

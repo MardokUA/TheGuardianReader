@@ -2,7 +2,7 @@ package com.gmail.laktionov.a.r.guardianreader.ui.main.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.ViewTreeObserver
+import com.gmail.laktionov.a.r.guardianreader.core.doOnPreDraw
 import com.gmail.laktionov.a.r.guardianreader.domain.ArticleItem
 import com.gmail.laktionov.a.r.guardianreader.domain.PinedItem
 import com.squareup.picasso.Picasso
@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.view_article_pintres_item.view.*
 import kotlinx.android.synthetic.main.view_article_raw_item.view.*
 
 abstract class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    abstract fun bind(item: ArticleItem, clickHandler: ((String) -> Unit)?)
+    abstract fun bind(item: ArticleItem, clickHandler: ((String, View) -> Unit)?)
 }
 
 /**
@@ -20,16 +20,22 @@ abstract class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 class RawViewHolder(itemView: View) : ArticleViewHolder(itemView) {
 
     override fun bind(item: ArticleItem,
-                      clickHandler: ((String) -> Unit)?) = with(itemView) {
+                      clickHandler: ((String, View) -> Unit)?) = with(itemView) {
 
         rawTitle.text = item.title
         rawSelection.text = item.section
 
-        clickHandler?.let { handler -> itemView.setOnClickListener { handler(item.articleId) } }
+        clickHandler?.let { handler -> itemView.setOnClickListener { handler(item.articleId, rawImage) } }
 
         if (item.image.isNotEmpty()) {
             Picasso.get().cancelRequest(rawImage)
-            Picasso.get().load(item.image).into(rawImage)
+            rawImage.doOnPreDraw {
+                Picasso.get()
+                        .load(item.image)
+                        .resize(rawImage.width, rawImage.height)
+                        .centerCrop()
+                        .into(rawImage)
+            }
         }
     }
 }
@@ -40,25 +46,21 @@ class RawViewHolder(itemView: View) : ArticleViewHolder(itemView) {
 class PintressViewHolder(itemView: View) : ArticleViewHolder(itemView) {
 
     override fun bind(item: ArticleItem,
-                      clickHandler: ((String) -> Unit)?) = with(itemView) {
+                      clickHandler: ((String, View) -> Unit)?) = with(itemView) {
         pinrressTitle.text = item.text
         pintressSelection.text = item.section
 
-        clickHandler?.let { handler -> itemView.setOnClickListener { handler(item.articleId) } }
+        clickHandler?.let { handler -> itemView.setOnClickListener { handler(item.articleId, pintressImage) } }
 
         if (item.image.isNotEmpty()) {
             Picasso.get().cancelRequest(pintressImage)
-            pintressImage.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    pintressImage.viewTreeObserver.removeOnPreDrawListener(this)
-                    Picasso.get()
-                            .load(item.image)
-                            .resize(pintressImage.width, pintressImage.height)
-                            .centerCrop()
-                            .into(pintressImage)
-                    return true
-                }
-            })
+            pintressImage.doOnPreDraw {
+                Picasso.get()
+                        .load(item.image)
+                        .resize(pintressImage.width, pintressImage.height)
+                        .centerCrop()
+                        .into(pintressImage)
+            }
         }
     }
 }

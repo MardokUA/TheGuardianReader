@@ -21,5 +21,4 @@ class ArticleDetailsViewModel(private val repository: Repository,
             articleData.postValue(repository.getCurrentArticle(articleId))
         }
     }
-
 }

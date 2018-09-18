@@ -2,12 +2,17 @@ package com.gmail.laktionov.a.r.guardianreader.ui.main
 
 import android.arch.lifecycle.Observer
 import android.arch.paging.PagedList
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.view.Window
 import com.gmail.laktionov.a.r.guardianreader.R
+import com.gmail.laktionov.a.r.guardianreader.core.isLolipop
 import com.gmail.laktionov.a.r.guardianreader.core.obtainViewModel
 import com.gmail.laktionov.a.r.guardianreader.domain.ArticleItem
 import com.gmail.laktionov.a.r.guardianreader.domain.PinedItem
@@ -20,9 +25,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
-    private val rawAdapter by lazy { RawAdapter().addClickListener { id -> showContent(id) } }
-    private val pintressAdapter by lazy { PintressAdapter().addClickListener { id -> showContent(id) } }
-    private val pinedAdapter by lazy { PinedAdapter().addClickListener { id -> showContent(id) } }
+    private val rawAdapter by lazy { RawAdapter().addClickListener { id, view -> showContent(id, view) } }
+    private val pintressAdapter by lazy { PintressAdapter().addClickListener { id, view -> showContent(id, view) } }
+    private val pinedAdapter by lazy { PinedAdapter().addClickListener { id, view -> showContent(id, view) } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +87,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showContent(articleId: String) {
-        startActivity(ArticleDetailsActivity.createIntent(this, articleId))
+    private fun showContent(articleId: String, view: View) {
+        startActivity(ArticleDetailsActivity.createIntent(this, articleId),
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, "target_image").toBundle())
     }
 }
