@@ -51,7 +51,7 @@ class PintressViewHolder(itemView: View) : ArticleViewHolder(itemView) {
 
     override fun bind(item: ArticleItem,
                       clickHandler: ((String, View) -> Unit)?) = with(itemView) {
-        pinrressTitle.text = item.text
+        pinrressTitle.text = item.title
         pintressSelection.text = item.section
 
         clickHandler?.let { handler -> itemView.setOnClickListener { handler(item.articleId, pintressImage) } }
