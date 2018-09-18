@@ -11,7 +11,7 @@ const val DATABASE_VER = 1
 @Dao
 interface RoomDao {
 
-    @Query("SELECT * FROM news")
+    @Query("SELECT * FROM news ORDER BY date DESC")
     fun getAllArticles(): DataSource.Factory<Int, Article>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -29,8 +29,7 @@ abstract class GuardianDatabase : RoomDatabase() {
 }
 
 @Entity(tableName = "news")
-data class Article(@PrimaryKey(autoGenerate = true)
-                   @ColumnInfo(name = "id") val id: Int = 0,
+data class Article(@PrimaryKey
                    @ColumnInfo(name = "article_id") val articleId: String,
                    @ColumnInfo(name = "section_id") val sectionId: String,
                    @ColumnInfo(name = "section") val section: String,

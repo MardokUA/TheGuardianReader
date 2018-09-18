@@ -10,7 +10,6 @@ class ArticleBoundaryCallback(private val remoteRequest: suspend (page: Int) -> 
                               private val bgContext: CoroutineContext = CommonPool) : PagedList.BoundaryCallback<ArticleItem>() {
 
     private var isRequestInProgress = false
-
     private var lastRequestedPage = 1
 
     override fun onZeroItemsLoaded() {

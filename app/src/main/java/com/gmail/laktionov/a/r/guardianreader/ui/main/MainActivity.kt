@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
                 mainAllArticleRv.adapter = rawAdapter
                 rawAdapter.submitList(viewModel.getArticles())
             }
-
         }
 
         with(mainAllArticleRv) {
@@ -57,7 +56,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showData(data: PagedList<ArticleItem>) {
-        Log.w("MainActivity", "$data")
         if (mainAllArticleRv.adapter is RawAdapter) {
             rawAdapter.submitList(data)
         } else {
