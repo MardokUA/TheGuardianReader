@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.gmail.laktionov.a.r.guardianreader.R
 import com.gmail.laktionov.a.r.guardianreader.core.isPreLolipop
@@ -46,13 +47,13 @@ class MainActivity : AppCompatActivity() {
         mainSwapViewButton.setOnClickListener { view ->
             view.isSelected = !view.isSelected
             if (view.isSelected) {
-                mainAllArticleRv.adapter = pintressAdapter
-                mainAllArticleRv.layoutManager = GridLayoutManager(this, 2)
+                mainAllArticleRv.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                 pintressAdapter.submitList(viewModel.getArticles())
+                mainAllArticleRv.adapter = pintressAdapter
             } else {
-                mainAllArticleRv.adapter = rawAdapter
                 mainAllArticleRv.layoutManager = LinearLayoutManager(this)
                 rawAdapter.submitList(viewModel.getArticles())
+                mainAllArticleRv.adapter = rawAdapter
             }
         }
 

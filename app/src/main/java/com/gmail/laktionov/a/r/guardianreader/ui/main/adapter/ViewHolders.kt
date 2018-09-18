@@ -61,8 +61,6 @@ class PintressViewHolder(itemView: View) : ArticleViewHolder(itemView) {
             pintressImage.doOnPreDraw {
                 Picasso.get()
                         .load(item.image)
-                        .resize(pintressImage.width, pintressImage.height)
-                        .centerCrop()
                         .into(pintressImage)
             }
         }else{

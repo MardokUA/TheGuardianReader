@@ -18,7 +18,6 @@ import com.gmail.laktionov.a.r.guardianreader.domain.SingleArticleItem
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_article_details.*
-import kotlinx.android.synthetic.main.view_article_pintres_item.view.*
 
 class ArticleDetailsActivity : AppCompatActivity() {
 
@@ -73,7 +72,7 @@ class ArticleDetailsActivity : AppCompatActivity() {
         detailsTitle.text = it.item.title
         detailsPinButton.isSelected = it.isSelected
 
-        if(isPreLolipop()){
+        if (isPreLolipop()) {
             detailsTitle.visibility = View.VISIBLE
             detailsPinButton.visibility = View.VISIBLE
         }
@@ -91,7 +90,7 @@ class ArticleDetailsActivity : AppCompatActivity() {
                     }
                 }
             })
-        }else{
+        } else {
             detailsImage.setImageResource(R.mipmap.ic_app_launcher)
         }
     }
