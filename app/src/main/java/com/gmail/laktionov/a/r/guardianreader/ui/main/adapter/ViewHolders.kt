@@ -2,6 +2,7 @@ package com.gmail.laktionov.a.r.guardianreader.ui.main.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.gmail.laktionov.a.r.guardianreader.R
 import com.gmail.laktionov.a.r.guardianreader.core.doOnPreDraw
 import com.gmail.laktionov.a.r.guardianreader.domain.ArticleItem
 import com.gmail.laktionov.a.r.guardianreader.domain.PinedItem
@@ -37,6 +38,9 @@ class RawViewHolder(itemView: View) : ArticleViewHolder(itemView) {
                         .into(rawImage)
             }
         }
+        else{
+            rawImage.setImageResource(R.mipmap.ic_app_launcher)
+        }
     }
 }
 
@@ -61,6 +65,8 @@ class PintressViewHolder(itemView: View) : ArticleViewHolder(itemView) {
                         .centerCrop()
                         .into(pintressImage)
             }
+        }else{
+            pintressImage.setImageResource(R.mipmap.ic_app_launcher)
         }
     }
 }
