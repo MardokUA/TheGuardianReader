@@ -24,7 +24,7 @@
         app:layout_constraintGuide_percent="0.60" />
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/articleImage"
+        android:id="@+id/pintressImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,7 +34,7 @@
         tools:src="@mipmap/ic_app_launcher_round" />
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/articleTitle"
+        android:id="@+id/pinrressTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -47,12 +47,12 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/titleVerticalGuideline"
-        app:layout_constraintStart_toStartOf="@id/articleImage"
+        app:layout_constraintStart_toStartOf="@id/pintressImage"
         app:layout_constraintTop_toBottomOf="@id/titleHorizontalGuideline"
         tools:text="Newcastle v Arsenal, Manchester City v Fulham: clockwatch – live!" />
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/articleSection"
+        android:id="@+id/pintressSelection"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -68,7 +68,7 @@
         android:textSize="12sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/articleImage"
+        app:layout_constraintEnd_toEndOf="@id/pintressImage"
         app:layout_constraintStart_toStartOf="@id/titleVerticalGuideline"
         tools:text="Football" />
 

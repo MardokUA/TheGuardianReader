@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         setupView()
         setupObservers()
     }
-    
+
     private fun setupView() {
         mainSwapViewButton.setOnClickListener { view ->
             view.isSelected = !view.isSelected
