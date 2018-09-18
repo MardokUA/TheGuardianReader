@@ -13,5 +13,11 @@ class ArticleDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article_details)
         viewModel = obtainViewModel(ArticleDetailsViewModel::class.java)
+
+        setupObservers()
+    }
+
+    private fun setupObservers() {
+
     }
 }

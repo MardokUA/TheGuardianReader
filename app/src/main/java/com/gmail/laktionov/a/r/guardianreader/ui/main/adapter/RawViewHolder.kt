@@ -16,6 +16,5 @@ class RawViewHolder(itemView: View) : ArticleViewHolder(itemView) {
             Picasso.get().cancelRequest(articleImage)
             Picasso.get().load(item.image).into(articleImage)
         }
-
     }
 }

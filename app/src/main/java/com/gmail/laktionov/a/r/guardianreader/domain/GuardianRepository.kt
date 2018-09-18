@@ -19,6 +19,10 @@ class GuardianRepository(private val remoteStorage: RemoteStorage,
         return ArticleBoundaryCallback({ page -> remoteStorage.getAllArticles(page) }, { localStorage.saveArticles(it) })
     }
 
+    override fun getCurrentArticle(articleId: String): ArticleItem {
+        return localStorage.getCurrentArticle(articleId)
+    }
+
     object ArticleMapper {
 
         fun mapToArticleItem(source: Article) =

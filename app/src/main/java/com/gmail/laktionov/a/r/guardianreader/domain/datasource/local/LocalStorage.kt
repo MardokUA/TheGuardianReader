@@ -12,6 +12,10 @@ class LocalStorage(private val dbStorage: DBStorage,
         return dbStorage.getAllArticles().map { data -> mapToArticleItem(data) }
     }
 
+    fun getCurrentArticle(articleId: String): ArticleItem {
+        return mapToArticleItem(dbStorage.getCurrentArticle(articleId))
+    }
+
     fun saveArticles(data: List<ArticleItem>) {
         dbStorage.saveArticles(data.map { item -> mapToArticle(item) })
     }

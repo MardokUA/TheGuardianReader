@@ -31,14 +31,31 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <WebView
-        android:id="@+id/detailsContent"
+    <!--<WebView-->
+    <!--android:id="@+id/detailsContent"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="0dp"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@id/detailsImageContainer" />-->
+
+    <ScrollView
+        android:id="@+id/detailsContentContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailsImageContainer" />
+        app:layout_constraintTop_toBottomOf="@id/detailsImageContainer">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/detailsContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
 
 
     <android.support.v7.widget.AppCompatImageView

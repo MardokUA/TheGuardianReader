@@ -16,6 +16,9 @@ interface RoomDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(posts: List<Article>)
+
+    @Query("SELECT * FROM news WHERE article_id IS :articleId ")
+    fun getArticleContent(articleId: String): Article
 }
 
 /**

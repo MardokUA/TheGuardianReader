@@ -8,4 +8,6 @@ interface Repository {
     fun getArticles(): DataSource.Factory<Int, ArticleItem>
 
     fun getBoundaryCallback(): PagedList.BoundaryCallback<ArticleItem>
+
+    fun getCurrentArticle(articleId: String): ArticleItem
 }
