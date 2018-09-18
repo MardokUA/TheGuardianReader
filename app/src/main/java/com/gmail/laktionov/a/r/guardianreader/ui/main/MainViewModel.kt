@@ -40,8 +40,8 @@ class MainViewModel(private val repository: Repository,
     }
 
     companion object {
-        private const val PAGE_SIZE = 10
-        private const val PREFETCH_DISTANCE = 5
+        private const val PAGE_SIZE = 20
+        private const val PREFETCH_DISTANCE = 10
         private const val IS_PLACEHOLDERS_NEEDED = true
     }
 }

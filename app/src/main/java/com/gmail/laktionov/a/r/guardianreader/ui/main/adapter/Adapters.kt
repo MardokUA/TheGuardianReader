@@ -67,6 +67,9 @@ class RawAdapter : PagedListAdapter<ArticleItem, ArticleViewHolder>(DIFF_CALLBAC
     private var clickHandler: ((String, View) -> Unit)? = null
     fun addClickListener(clickHandler: (String, View) -> Unit) = apply { this.clickHandler = clickHandler }
 
+    fun clearData(){
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         return RawViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_article_raw_item, parent, false))
     }

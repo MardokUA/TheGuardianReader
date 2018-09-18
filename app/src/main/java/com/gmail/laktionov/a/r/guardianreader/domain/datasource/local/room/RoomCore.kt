@@ -20,7 +20,7 @@ interface RoomDao {
     @Query("SELECT * FROM news WHERE article_id IS :articleId")
     fun getSingleArticle(articleId: String): SingleArticle
 
-    @Query("SELECT * FROM news ORDER BY date DESC")
+    @Query("SELECT * FROM news")
     fun getAllArticles(): DataSource.Factory<Int, Article>
 
     //PinedArticle

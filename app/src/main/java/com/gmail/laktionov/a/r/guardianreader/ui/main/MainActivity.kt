@@ -46,12 +46,12 @@ class MainActivity : AppCompatActivity() {
         mainSwapViewButton.setOnClickListener { view ->
             view.isSelected = !view.isSelected
             if (view.isSelected) {
-                mainAllArticleRv.layoutManager = GridLayoutManager(this, 2)
                 mainAllArticleRv.adapter = pintressAdapter
+                mainAllArticleRv.layoutManager = GridLayoutManager(this, 2)
                 pintressAdapter.submitList(viewModel.getArticles())
             } else {
-                mainAllArticleRv.layoutManager = LinearLayoutManager(this)
                 mainAllArticleRv.adapter = rawAdapter
+                mainAllArticleRv.layoutManager = LinearLayoutManager(this)
                 rawAdapter.submitList(viewModel.getArticles())
             }
         }
