@@ -12,3 +12,6 @@ data class PinedItem(val articleId: String,
                      val title: String,
                      val section: String,
                      val isSelected: Boolean = true)
+
+data class SingleArticleItem(val item: ArticleItem,
+                             var isSelected: Boolean)

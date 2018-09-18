@@ -9,17 +9,16 @@ import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import android.transition.ChangeBounds
 import android.view.View
-import android.view.ViewTreeObserver
 import android.view.Window
 import com.gmail.laktionov.a.r.guardianreader.R
 import com.gmail.laktionov.a.r.guardianreader.core.doOnPreDraw
 import com.gmail.laktionov.a.r.guardianreader.core.isLolipop
 import com.gmail.laktionov.a.r.guardianreader.core.obtainViewModel
 import com.gmail.laktionov.a.r.guardianreader.domain.ArticleItem
+import com.gmail.laktionov.a.r.guardianreader.domain.SingleArticleItem
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_article_details.*
-
 
 class ArticleDetailsActivity : AppCompatActivity() {
 
@@ -55,12 +54,12 @@ class ArticleDetailsActivity : AppCompatActivity() {
     }
 
 
-    private fun showContent(it: ArticleItem) {
-        detailsContent.text = it.text
-        detailsTitle.text = it.title
+    private fun showContent(it: SingleArticleItem) {
+        detailsContent.text = it.item.text
+        detailsTitle.text = it.item.title
 
-        if (it.image.isNotEmpty()) {
-            Picasso.get().load(it.image).into(detailsImage, object : Callback {
+        if (it.item.image.isNotEmpty()) {
+            Picasso.get().load(it.item.image).into(detailsImage, object : Callback {
                 override fun onError(e: Exception?) {}
                 override fun onSuccess() {
                     if (this@ArticleDetailsActivity.isLolipop()) {
@@ -76,18 +75,6 @@ class ArticleDetailsActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         this.supportFinishAfterTransition()
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun scheduleStartPostponedTransition(sharedElement: View) {
-        sharedElement.viewTreeObserver.addOnPreDrawListener(
-                object : ViewTreeObserver.OnPreDrawListener {
-                    override fun onPreDraw(): Boolean {
-                        sharedElement.viewTreeObserver.removeOnPreDrawListener(this)
-                        startPostponedEnterTransition()
-                        return true
-                    }
-                })
     }
 
     companion object {

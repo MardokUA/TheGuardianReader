@@ -8,7 +8,7 @@ class RoomDbStorage(private val db: GuardianDatabase) : DBStorage {
 
     override fun getAllArticles(): DataSource.Factory<Int, Article> = db.getDao().getAllArticles()
     override fun saveArticles(data: List<Article>) = db.getDao().insert(data)
-    override fun getCurrentArticle(articleId: String): Article = db.getDao().getArticleContent(articleId)
+    override fun getCurrentArticle(articleId: String): SingleArticle = db.getDao().getSingleArticle(articleId)
 
     override fun getPinedArticles(): LiveData<List<Article>> = db.getDao().getPinedArticles()
 

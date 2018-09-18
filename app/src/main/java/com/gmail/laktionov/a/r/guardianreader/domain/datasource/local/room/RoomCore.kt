@@ -13,8 +13,12 @@ interface RoomDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(posts: List<Article>)
 
-    @Query("SELECT * FROM news WHERE article_id IS :articleId ")
+    @Query("SELECT * FROM news WHERE article_id IS :articleId")
     fun getArticleContent(articleId: String): Article
+
+    @Transaction
+    @Query("SELECT * FROM news WHERE article_id IS :articleId")
+    fun getSingleArticle(articleId: String): SingleArticle
 
     @Query("SELECT * FROM news ORDER BY date DESC")
     fun getAllArticles(): DataSource.Factory<Int, Article>
@@ -53,3 +57,13 @@ data class Article(@PrimaryKey
 @Entity(tableName = "pined_articles")
 data class PinedArticle(@PrimaryKey
                         @ColumnInfo(name = "article_id") val articleId: String)
+
+class SingleArticle {
+
+    @Embedded
+    lateinit var article: Article
+    @Relation(
+            parentColumn = "article_id",
+            entityColumn = "article_id")
+    var pinedArticle: List<PinedArticle> = mutableListOf()
+}

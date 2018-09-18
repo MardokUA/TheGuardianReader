@@ -7,7 +7,7 @@ import android.arch.paging.PagedList
 interface Repository {
 
     fun getArticles(): DataSource.Factory<Int, ArticleItem>
-    fun getCurrentArticle(articleId: String): ArticleItem
+    fun getCurrentArticle(articleId: String): SingleArticleItem
     fun getBoundaryCallback(): PagedList.BoundaryCallback<ArticleItem>
 
     fun getPinedArticles(): LiveData<List<PinedItem>>

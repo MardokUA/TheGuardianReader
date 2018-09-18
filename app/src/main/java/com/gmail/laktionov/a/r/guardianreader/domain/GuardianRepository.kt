@@ -5,6 +5,7 @@ import android.arch.paging.DataSource
 import android.arch.paging.PagedList
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.LocalStorage
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.room.Article
+import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.room.SingleArticle
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.remote.RemoteStorage
 
 class GuardianRepository(private val remoteStorage: RemoteStorage,
@@ -18,7 +19,7 @@ class GuardianRepository(private val remoteStorage: RemoteStorage,
         return ArticleBoundaryCallback({ page -> remoteStorage.getAllArticles(page) }, { localStorage.saveArticles(it) })
     }
 
-    override fun getCurrentArticle(articleId: String): ArticleItem {
+    override fun getCurrentArticle(articleId: String): SingleArticleItem {
         return localStorage.getCurrentArticle(articleId)
     }
 
@@ -52,5 +53,9 @@ class GuardianRepository(private val remoteStorage: RemoteStorage,
                 PinedItem(articleId = source.articleId,
                         title = source.title,
                         section = source.section)
+
+        fun mapToSingleArticleItem(sourse: SingleArticle) =
+                SingleArticleItem(item = mapToArticleItem(sourse.article),
+                        isSelected = !sourse.pinedArticle.isEmpty())
     }
 }

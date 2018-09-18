@@ -7,7 +7,9 @@ import com.gmail.laktionov.a.r.guardianreader.domain.ArticleItem
 import com.gmail.laktionov.a.r.guardianreader.domain.GuardianRepository.ArticleMapper.mapToArticle
 import com.gmail.laktionov.a.r.guardianreader.domain.GuardianRepository.ArticleMapper.mapToArticleItem
 import com.gmail.laktionov.a.r.guardianreader.domain.GuardianRepository.ArticleMapper.mapToPinedItem
+import com.gmail.laktionov.a.r.guardianreader.domain.GuardianRepository.ArticleMapper.mapToSingleArticleItem
 import com.gmail.laktionov.a.r.guardianreader.domain.PinedItem
+import com.gmail.laktionov.a.r.guardianreader.domain.SingleArticleItem
 
 class LocalStorage(private val dbStorage: DBStorage,
                    private val keyValueStorage: KeyValueStorage) {
@@ -16,8 +18,8 @@ class LocalStorage(private val dbStorage: DBStorage,
         return dbStorage.getAllArticles().map { data -> mapToArticleItem(data) }
     }
 
-    fun getCurrentArticle(articleId: String): ArticleItem {
-        return mapToArticleItem(dbStorage.getCurrentArticle(articleId))
+    fun getCurrentArticle(articleId: String): SingleArticleItem {
+        return mapToSingleArticleItem(dbStorage.getCurrentArticle(articleId))
     }
 
     fun saveArticles(data: List<ArticleItem>) {
