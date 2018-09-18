@@ -70,8 +70,11 @@ class PintressViewHolder(itemView: View) : ArticleViewHolder(itemView) {
  */
 class PinedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(item: PinedItem) = with(itemView) {
+    fun bind(item: PinedItem,
+             clickHandler: ((String) -> Unit)?) = with(itemView) {
         pinedTitle.text = item.title
         pinedSection.text = item.section
+
+        clickHandler?.let { handler -> itemView.setOnClickListener { handler(item.articleId) } }
     }
 }

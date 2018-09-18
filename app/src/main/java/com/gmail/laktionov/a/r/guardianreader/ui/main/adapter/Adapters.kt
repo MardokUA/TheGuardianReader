@@ -18,8 +18,8 @@ import com.gmail.laktionov.a.r.guardianreader.domain.PinedItem
 class PinedAdapter(private val pinedList: MutableList<PinedItem> = mutableListOf()) :
         RecyclerView.Adapter<PinedViewHolder>() {
 
-    private var clickHandler: ((String, View) -> Unit)? = null
-    fun addClickListener(clickHandler: (String, View) -> Unit) = apply { this.clickHandler = clickHandler }
+    private var clickHandler: ((String) -> Unit)? = null
+    fun addClickListener(clickHandler: (String) -> Unit) = apply { this.clickHandler = clickHandler }
 
     fun updateList(newList: List<PinedItem>) {
         val result = DiffUtil.calculateDiff(PinedDiffCallback(pinedList, newList))
@@ -33,7 +33,7 @@ class PinedAdapter(private val pinedList: MutableList<PinedItem> = mutableListOf
 
     override fun getItemCount(): Int = pinedList.size
     override fun onBindViewHolder(holder: PinedViewHolder, position: Int) {
-        holder.bind(pinedList[position])
+        holder.bind(pinedList[position], clickHandler)
     }
 }
 

@@ -22,6 +22,7 @@ fun <T : ViewModel> AppCompatActivity.obtainViewModel(modelClass: Class<T>): T {
 }
 
 fun AppCompatActivity.isLolipop() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+fun AppCompatActivity.isPreLolipop() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP
 
 /**
  * Extension , that provides retrofit call in in own thread and wraps it in [BaseResponse]

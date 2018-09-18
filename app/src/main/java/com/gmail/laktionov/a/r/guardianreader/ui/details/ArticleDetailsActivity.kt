@@ -7,14 +7,12 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AppCompatDelegate
 import android.transition.ChangeBounds
 import android.view.View
 import android.view.Window
 import com.gmail.laktionov.a.r.guardianreader.R
-import com.gmail.laktionov.a.r.guardianreader.core.doOnPreDraw
-import com.gmail.laktionov.a.r.guardianreader.core.isLolipop
-import com.gmail.laktionov.a.r.guardianreader.core.obtainViewModel
-import com.gmail.laktionov.a.r.guardianreader.core.showSnackbar
+import com.gmail.laktionov.a.r.guardianreader.core.*
 import com.gmail.laktionov.a.r.guardianreader.domain.Message
 import com.gmail.laktionov.a.r.guardianreader.domain.SingleArticleItem
 import com.squareup.picasso.Callback
@@ -24,6 +22,12 @@ import kotlinx.android.synthetic.main.activity_article_details.*
 class ArticleDetailsActivity : AppCompatActivity() {
 
     private lateinit var viewModel: ArticleDetailsViewModel
+
+    init {
+        if (isPreLolipop()) {
+            AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (isLolipop()) initAnimation()
@@ -67,6 +71,11 @@ class ArticleDetailsActivity : AppCompatActivity() {
         detailsContent.text = it.item.text
         detailsTitle.text = it.item.title
         detailsPinButton.isSelected = it.isSelected
+
+        if(isPreLolipop()){
+            detailsTitle.visibility = View.VISIBLE
+            detailsPinButton.visibility = View.VISIBLE
+        }
 
         if (it.item.image.isNotEmpty()) {
             Picasso.get().load(it.item.image).into(detailsImage, object : Callback {

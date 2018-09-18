@@ -52,11 +52,11 @@
 
     <FrameLayout
         android:id="@+id/mainPinedContainer"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="120dp"
-        android:padding="16dp"
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mainAppbar"
         tools:visibility="visible">
@@ -65,8 +65,8 @@
             android:id="@+id/mainPinedRv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="horizontal"
-            app:reverseLayout="true" />
+            android:layout_gravity="center"
+            android:scrollbars="horizontal" />
 
     </FrameLayout>
 
