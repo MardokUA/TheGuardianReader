@@ -3,9 +3,14 @@ package com.gmail.laktionov.a.r.guardianreader.core
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Build
+import android.support.annotation.ColorRes
+import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewTreeObserver
+import android.widget.TextView
+import com.gmail.laktionov.a.r.guardianreader.R
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.remote.retrofit.BaseResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,4 +52,14 @@ inline fun View.doOnPreDraw(crossinline action: (view: View) -> Unit) {
             return true
         }
     })
+}
+
+const val SNACK_SHOW_TIME = 250
+fun View.showSnackbar(snackbarText: String,
+                      timeLength: Int = SNACK_SHOW_TIME,
+                      @ColorRes backgroundColor: Int = R.color.colorAccentSecond) {
+    with(Snackbar.make(this, snackbarText, timeLength)) {
+        view.setBackgroundResource(backgroundColor)
+        show()
+    }
 }

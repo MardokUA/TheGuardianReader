@@ -5,6 +5,7 @@ import android.arch.paging.DataSource
 import android.arch.paging.PagedList
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.LocalStorage
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.room.Article
+import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.room.PinedArticle
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.room.SingleArticle
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.remote.RemoteStorage
 
@@ -25,6 +26,12 @@ class GuardianRepository(private val remoteStorage: RemoteStorage,
 
     override fun getPinedArticles(): LiveData<List<PinedItem>> {
         return localStorage.getPinedArticles()
+    }
+
+    override fun changePinState(currentArticleId: String, isPined: Boolean): Message {
+        val isSuccess = localStorage.changePinState(currentArticleId, isPined) > 0
+        val message = if (isSuccess) localStorage.getSuccessMessage() else localStorage.getErrorMessage()
+        return Message(message, isSuccess)
     }
 
     object ArticleMapper {
@@ -57,5 +64,7 @@ class GuardianRepository(private val remoteStorage: RemoteStorage,
         fun mapToSingleArticleItem(sourse: SingleArticle) =
                 SingleArticleItem(item = mapToArticleItem(sourse.article),
                         isSelected = !sourse.pinedArticle.isEmpty())
+
+        fun mapToPinedArticle(articleId: String) = PinedArticle(articleId)
     }
 }

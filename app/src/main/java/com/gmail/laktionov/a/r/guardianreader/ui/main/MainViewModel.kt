@@ -35,7 +35,9 @@ class MainViewModel(private val repository: Repository,
                 .build()
     }
 
-    private fun getPinedItems(): LiveData<List<PinedItem>> = repository.getPinedArticles()
+    private fun getPinedItems(): LiveData<List<PinedItem>> {
+        return repository.getPinedArticles()
+    }
 
     companion object {
         private const val PAGE_SIZE = 10

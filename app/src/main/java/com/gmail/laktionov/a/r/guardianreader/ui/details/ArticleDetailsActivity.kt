@@ -14,7 +14,8 @@ import com.gmail.laktionov.a.r.guardianreader.R
 import com.gmail.laktionov.a.r.guardianreader.core.doOnPreDraw
 import com.gmail.laktionov.a.r.guardianreader.core.isLolipop
 import com.gmail.laktionov.a.r.guardianreader.core.obtainViewModel
-import com.gmail.laktionov.a.r.guardianreader.domain.ArticleItem
+import com.gmail.laktionov.a.r.guardianreader.core.showSnackbar
+import com.gmail.laktionov.a.r.guardianreader.domain.Message
 import com.gmail.laktionov.a.r.guardianreader.domain.SingleArticleItem
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -33,7 +34,14 @@ class ArticleDetailsActivity : AppCompatActivity() {
         viewModel = obtainViewModel(ArticleDetailsViewModel::class.java)
         viewModel.getCurrentArticle(getArticleIdFromIntent())
 
+        setupView()
         setupObservers()
+    }
+
+    private fun setupView() {
+        detailsPinButton.setOnClickListener {
+            viewModel.changePinState(!it.isSelected)
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -51,12 +59,14 @@ class ArticleDetailsActivity : AppCompatActivity() {
     private fun setupObservers() {
         viewModel.observeArticleData().observe(this,
                 Observer { data -> data?.let { showContent(it) } })
+        viewModel.observeMessage().observe(this,
+                Observer { isSuccess -> isSuccess?.let { showMessage(it) } })
     }
-
 
     private fun showContent(it: SingleArticleItem) {
         detailsContent.text = it.item.text
         detailsTitle.text = it.item.title
+        detailsPinButton.isSelected = it.isSelected
 
         if (it.item.image.isNotEmpty()) {
             Picasso.get().load(it.item.image).into(detailsImage, object : Callback {
@@ -65,12 +75,19 @@ class ArticleDetailsActivity : AppCompatActivity() {
                     if (this@ArticleDetailsActivity.isLolipop()) {
                         detailsImage.doOnPreDraw {
                             detailsTitle.visibility = View.VISIBLE
+                            detailsPinButton.visibility = View.VISIBLE
                             startPostponedEnterTransition()
                         }
                     }
                 }
             })
         }
+    }
+
+    private fun showMessage(message: Message) {
+        detailsPinButton.isSelected = !detailsPinButton.isSelected
+        val backgroundColor = if (message.isSuccess) android.R.color.holo_green_dark else android.R.color.holo_red_dark
+        detailsContentContainer.showSnackbar(message.messageText, backgroundColor)
     }
 
     override fun onBackPressed() {

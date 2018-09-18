@@ -72,9 +72,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showPinedData(data: List<PinedItem>?) {
         if (data == null || data.isEmpty()) {
-            mainPinedRv.visibility = View.GONE
+            mainPinedContainer.visibility = View.GONE
         } else {
-            mainPinedRv.visibility = View.VISIBLE
+            mainPinedContainer.visibility = View.VISIBLE
             pinedAdapter.updateList(data)
         }
     }

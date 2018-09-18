@@ -8,7 +8,9 @@ import com.gmail.laktionov.a.r.guardianreader.domain.Repository
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.DBStorage
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.KeyValueStorage
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.LocalStorage
+import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.StringProvider
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.preference.SharedPrefs
+import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.resources.LocalStringProvider
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.room.GuardianDatabase
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.room.RoomDbStorage
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.remote.RemoteStorage
@@ -33,8 +35,8 @@ object DIManager {
                     RemoteStorage(provideRemoteSource()),
                     LocalStorage(
                             provideDBStorage(context),
-                            provideKeyValueStorage(context)))
-
+                            provideKeyValueStorage(context),
+                            provideStringProvider(context)))
 
     /*
         Remote source initialization
@@ -75,5 +77,9 @@ object DIManager {
     private fun provideKeyValueStorage(context: Context): KeyValueStorage {
         return SharedPrefs(
                 context.getSharedPreferences(SharedPrefs.SHARED_STORAGE, Context.MODE_PRIVATE))
+    }
+
+    private fun provideStringProvider(context: Context): StringProvider {
+        return LocalStringProvider(context.resources)
     }
 }

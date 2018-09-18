@@ -11,6 +11,13 @@ class RoomDbStorage(private val db: GuardianDatabase) : DBStorage {
     override fun getCurrentArticle(articleId: String): SingleArticle = db.getDao().getSingleArticle(articleId)
 
     override fun getPinedArticles(): LiveData<List<Article>> = db.getDao().getPinedArticles()
+    override fun changePinedState(article: PinedArticle, isPined: Boolean): Long {
+        return if (isPined) {
+            db.getDao().insert(article)
+        } else {
+            db.getDao().deletePinedArticle(article).toLong()
+        }
+    }
 
     companion object {
         const val DB_NAME = "guardian.db"

@@ -11,5 +11,6 @@ interface Repository {
     fun getBoundaryCallback(): PagedList.BoundaryCallback<ArticleItem>
 
     fun getPinedArticles(): LiveData<List<PinedItem>>
+    fun changePinState(currentArticleId: String, isPined: Boolean): Message
 
 }

@@ -25,13 +25,13 @@ interface RoomDao {
 
     //PinedArticle
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(pinedArticle: PinedArticle)
+    fun insert(pinedArticle: PinedArticle): Long
 
     @Query("SELECT pined_articles.article_id, news.* FROM pined_articles LEFT JOIN news ON pined_articles.article_id LIKE news.article_id ")
     fun getPinedArticles(): LiveData<List<Article>>
 
     @Delete
-    fun deletePinedArticle(pinedArticle: PinedArticle)
+    fun deletePinedArticle(pinedArticle: PinedArticle): Int
 }
 
 /**

@@ -6,13 +6,15 @@ import android.arch.paging.DataSource
 import com.gmail.laktionov.a.r.guardianreader.domain.ArticleItem
 import com.gmail.laktionov.a.r.guardianreader.domain.GuardianRepository.ArticleMapper.mapToArticle
 import com.gmail.laktionov.a.r.guardianreader.domain.GuardianRepository.ArticleMapper.mapToArticleItem
+import com.gmail.laktionov.a.r.guardianreader.domain.GuardianRepository.ArticleMapper.mapToPinedArticle
 import com.gmail.laktionov.a.r.guardianreader.domain.GuardianRepository.ArticleMapper.mapToPinedItem
 import com.gmail.laktionov.a.r.guardianreader.domain.GuardianRepository.ArticleMapper.mapToSingleArticleItem
 import com.gmail.laktionov.a.r.guardianreader.domain.PinedItem
 import com.gmail.laktionov.a.r.guardianreader.domain.SingleArticleItem
 
 class LocalStorage(private val dbStorage: DBStorage,
-                   private val keyValueStorage: KeyValueStorage) {
+                   private val keyValueStorage: KeyValueStorage,
+                   private val stringProvider: StringProvider) {
 
     fun getAllArticles(): DataSource.Factory<Int, ArticleItem> {
         return dbStorage.getAllArticles().map { data -> mapToArticleItem(data) }
@@ -31,4 +33,11 @@ class LocalStorage(private val dbStorage: DBStorage,
             article.map { mapToPinedItem(it) }
         }
     }
+
+    fun changePinState(currentArticleId: String, isPined: Boolean): Long {
+        return dbStorage.changePinedState(mapToPinedArticle(currentArticleId), isPined)
+    }
+
+    fun getSuccessMessage(): String = stringProvider.getSuccessMessage()
+    fun getErrorMessage(): String = stringProvider.getErrorMessage()
 }

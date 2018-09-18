@@ -3,8 +3,10 @@
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="160dp"
-    android:layout_height="80dp">
+    android:layout_height="80dp"
+    app:cardBackgroundColor="@android:color/white">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="wrap_content"
@@ -12,14 +14,15 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/pinedTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
+            android:textColor="@color/colorAccentSecond"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Some long title!!!!!!!" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/pinedSection"
