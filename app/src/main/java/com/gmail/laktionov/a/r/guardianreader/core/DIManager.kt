@@ -67,7 +67,9 @@ object DIManager {
                 Room.databaseBuilder(
                         context,
                         GuardianDatabase::class.java,
-                        RoomDbStorage.DB_NAME).build())
+                        RoomDbStorage.DB_NAME)
+                        .fallbackToDestructiveMigration()
+                        .build())
     }
 
     private fun provideKeyValueStorage(context: Context): KeyValueStorage {

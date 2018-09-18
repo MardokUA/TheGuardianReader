@@ -1,31 +1,40 @@
 package com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.room
 
+import android.arch.lifecycle.LiveData
 import android.arch.paging.DataSource
 import android.arch.persistence.room.*
 
-const val DATABASE_VER = 1
+const val DATABASE_VER = 2
 
-/**
- * Simple DAO class
- */
 @Dao
 interface RoomDao {
 
-    @Query("SELECT * FROM news ORDER BY date DESC")
-    fun getAllArticles(): DataSource.Factory<Int, Article>
-
+    //Article
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(posts: List<Article>)
 
     @Query("SELECT * FROM news WHERE article_id IS :articleId ")
     fun getArticleContent(articleId: String): Article
+
+    @Query("SELECT * FROM news ORDER BY date DESC")
+    fun getAllArticles(): DataSource.Factory<Int, Article>
+
+    //PinedArticle
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(pinedArticle: PinedArticle)
+
+    @Query("SELECT pined_articles.article_id, news.* FROM pined_articles LEFT JOIN news ON pined_articles.article_id LIKE news.article_id ")
+    fun getPinedArticles(): LiveData<List<Article>>
+
+    @Delete
+    fun deletePinedArticle(pinedArticle: PinedArticle)
 }
 
 /**
  * Simple Room database implementation
  */
 @Database(
-        entities = [Article::class],
+        entities = [Article::class, PinedArticle::class],
         version = DATABASE_VER)
 abstract class GuardianDatabase : RoomDatabase() {
     abstract fun getDao(): RoomDao
@@ -40,3 +49,7 @@ data class Article(@PrimaryKey
                    @ColumnInfo(name = "date") val publicationDate: String,
                    @ColumnInfo(name = "title") val title: String,
                    @ColumnInfo(name = "text") val text: String)
+
+@Entity(tableName = "pined_articles")
+data class PinedArticle(@PrimaryKey
+                        @ColumnInfo(name = "article_id") val articleId: String)

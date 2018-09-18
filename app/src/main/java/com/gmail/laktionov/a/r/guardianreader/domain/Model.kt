@@ -7,3 +7,8 @@ data class ArticleItem(val articleId: String,
                        val publicationDate: String,
                        val title: String,
                        val text: String)
+
+data class PinedItem(val articleId: String,
+                     val title: String,
+                     val section: String,
+                     val isSelected: Boolean = true)

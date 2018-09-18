@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
+import android.view.View
 import com.gmail.laktionov.a.r.guardianreader.R
 import com.gmail.laktionov.a.r.guardianreader.core.obtainViewModel
 import com.gmail.laktionov.a.r.guardianreader.domain.ArticleItem
+import com.gmail.laktionov.a.r.guardianreader.domain.PinedItem
+import com.gmail.laktionov.a.r.guardianreader.ui.main.adapter.PinedAdapter
 import com.gmail.laktionov.a.r.guardianreader.ui.main.adapter.PintressAdapter
 import com.gmail.laktionov.a.r.guardianreader.ui.main.adapter.RawAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private val rawAdapter by lazy { RawAdapter() }
     private val pintressAdapter by lazy { PintressAdapter() }
+    private val pinedAdapter by lazy { PinedAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,11 +51,27 @@ class MainActivity : AppCompatActivity() {
             adapter = rawAdapter
             layoutManager = LinearLayoutManager(context)
         }
+
+        with(mainPinedRv) {
+            adapter = pinedAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
     }
 
     private fun setupObservers() {
         viewModel.observeArticles().observe(this,
                 Observer { data -> data?.let { showData(it) } })
+        viewModel.observePinnedArticles().observe(this,
+                Observer { data -> showPinedData(data) })
+    }
+
+    private fun showPinedData(data: List<PinedItem>?) {
+        if (data == null || data.isEmpty()) {
+            mainPinedRv.visibility = View.GONE
+        } else {
+            mainPinedRv.visibility = View.VISIBLE
+            pinedAdapter.updateList(data)
+        }
     }
 
     private fun showData(data: PagedList<ArticleItem>) {

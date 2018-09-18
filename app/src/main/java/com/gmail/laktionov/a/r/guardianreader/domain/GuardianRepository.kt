@@ -1,9 +1,8 @@
 package com.gmail.laktionov.a.r.guardianreader.domain
 
+import android.arch.lifecycle.LiveData
 import android.arch.paging.DataSource
 import android.arch.paging.PagedList
-import com.gmail.laktionov.a.r.guardianreader.domain.GuardianRepository.ArticleMapper.mapToArticle
-import com.gmail.laktionov.a.r.guardianreader.domain.GuardianRepository.ArticleMapper.mapToArticleItem
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.LocalStorage
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.room.Article
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.remote.RemoteStorage
@@ -21,6 +20,10 @@ class GuardianRepository(private val remoteStorage: RemoteStorage,
 
     override fun getCurrentArticle(articleId: String): ArticleItem {
         return localStorage.getCurrentArticle(articleId)
+    }
+
+    override fun getPinedArticles(): LiveData<List<PinedItem>> {
+        return localStorage.getPinedArticles()
     }
 
     object ArticleMapper {
@@ -44,5 +47,10 @@ class GuardianRepository(private val remoteStorage: RemoteStorage,
                         title = response.title,
                         image = response.image,
                         text = response.text)
+
+        fun mapToPinedItem(source: Article) =
+                PinedItem(articleId = source.articleId,
+                        title = source.title,
+                        section = source.section)
     }
 }
