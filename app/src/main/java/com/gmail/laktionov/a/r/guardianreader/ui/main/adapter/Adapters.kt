@@ -37,41 +37,25 @@ class PinedAdapter(private val pinedList: MutableList<PinedItem> = mutableListOf
     }
 }
 
-/**
- * Pintress adapter
- */
+class ArticlesAdapter : PagedListAdapter<ArticleItem, ArticleViewHolder>(DIFF_CALLBACK) {
 
-class PintressAdapter : PagedListAdapter<ArticleItem, ArticleViewHolder>(DIFF_CALLBACK) {
+    enum class ViewType(val value: Int) { RAW(1), PINTRESS(2) }
 
+    private var currentType = ViewType.RAW
     private var clickHandler: ((String, View) -> Unit)? = null
     fun addClickListener(clickHandler: (String, View) -> Unit) = apply { this.clickHandler = clickHandler }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        return PintressViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_article_pintres_item, parent, false))
+    fun swapViewType() {
+        currentType = if (currentType == ViewType.RAW) ViewType.PINTRESS else ViewType.RAW
     }
 
-    override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        val currentArticle = getItem(position)
-        if (currentArticle != null) {
-            holder.bind(currentArticle, clickHandler)
+    override fun getItemViewType(position: Int): Int = currentType.value
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
+        return when (viewType) {
+            ViewType.RAW.value -> RawViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_article_raw_item, parent, false))
+            else -> PintressViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_article_pintres_item, parent, false))
         }
-    }
-}
-
-/**
- * Raw adapter
- */
-
-class RawAdapter : PagedListAdapter<ArticleItem, ArticleViewHolder>(DIFF_CALLBACK) {
-
-    private var clickHandler: ((String, View) -> Unit)? = null
-    fun addClickListener(clickHandler: (String, View) -> Unit) = apply { this.clickHandler = clickHandler }
-
-    fun clearData(){
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        return RawViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_article_raw_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {

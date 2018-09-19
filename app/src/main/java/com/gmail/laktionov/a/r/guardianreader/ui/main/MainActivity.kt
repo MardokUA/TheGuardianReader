@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDelegate
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
@@ -16,17 +15,15 @@ import com.gmail.laktionov.a.r.guardianreader.core.obtainViewModel
 import com.gmail.laktionov.a.r.guardianreader.domain.ArticleItem
 import com.gmail.laktionov.a.r.guardianreader.domain.PinedItem
 import com.gmail.laktionov.a.r.guardianreader.ui.details.ArticleDetailsActivity
+import com.gmail.laktionov.a.r.guardianreader.ui.main.adapter.ArticlesAdapter
 import com.gmail.laktionov.a.r.guardianreader.ui.main.adapter.PinedAdapter
-import com.gmail.laktionov.a.r.guardianreader.ui.main.adapter.PintressAdapter
-import com.gmail.laktionov.a.r.guardianreader.ui.main.adapter.RawAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
-    private val rawAdapter by lazy { RawAdapter().addClickListener { id, view -> showContentWithTransition(id, view) } }
-    private val pintressAdapter by lazy { PintressAdapter().addClickListener { id, view -> showContentWithTransition(id, view) } }
     private val pinedAdapter by lazy { PinedAdapter().addClickListener { id -> showContent(id) } }
+    private val articleAdapter by lazy { ArticlesAdapter().addClickListener { id, view -> showContentWithTransition(id, view) } }
 
     init {
         if (isPreLolipop()) {
@@ -48,17 +45,15 @@ class MainActivity : AppCompatActivity() {
             view.isSelected = !view.isSelected
             if (view.isSelected) {
                 mainAllArticleRv.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-                pintressAdapter.submitList(viewModel.getArticles())
-                mainAllArticleRv.adapter = pintressAdapter
             } else {
                 mainAllArticleRv.layoutManager = LinearLayoutManager(this)
-                rawAdapter.submitList(viewModel.getArticles())
-                mainAllArticleRv.adapter = rawAdapter
             }
+            articleAdapter.swapViewType()
+            articleAdapter.notifyDataSetChanged()
         }
 
         with(mainAllArticleRv) {
-            adapter = rawAdapter
+            adapter = articleAdapter
             layoutManager = LinearLayoutManager(context)
         }
 
@@ -85,11 +80,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showData(data: PagedList<ArticleItem>) {
-        if (mainAllArticleRv.adapter is RawAdapter) {
-            rawAdapter.submitList(data)
-        } else {
-            pintressAdapter.submitList(data)
-        }
+        articleAdapter.submitList(data)
     }
 
     private fun showContent(articleId: String) {
