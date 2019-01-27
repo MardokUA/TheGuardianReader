@@ -28,12 +28,9 @@ class GuardianViewModelFactory(private val repository: Repository) : ViewModelPr
 
 
     companion object {
-
         lateinit var INSTANSE: GuardianViewModelFactory
-
         fun initialize(repository: Repository) {
             INSTANSE = GuardianViewModelFactory(repository)
         }
     }
-
 }

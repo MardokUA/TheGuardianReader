@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Simple implementation of dependency injection pattern
- * (Dagger2 light version) =)
+ * (Dagger2 or koin light and absurd version) =)
  */
 object DIManager {
 
@@ -38,9 +38,7 @@ object DIManager {
                             provideKeyValueStorage(context),
                             provideStringProvider(context)))
 
-    /*
-        Remote source initialization
-     */
+    /* Remote source initialization */
     private fun provideRemoteSource() =
             RetrofitServerStorage(provideServerApi())
 
@@ -60,10 +58,7 @@ object DIManager {
                     .build()
 
 
-    /*
-        Local source initialization
-     */
-
+    /* Local source initialization */
     private fun provideDBStorage(context: Context): DBStorage {
         return RoomDbStorage(
                 Room.databaseBuilder(

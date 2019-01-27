@@ -2,7 +2,6 @@ package com.gmail.laktionov.a.r.guardianreader.domain
 
 import android.arch.lifecycle.LiveData
 import android.arch.paging.DataSource
-import android.arch.paging.PagedList
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.LocalStorage
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.room.Article
 import com.gmail.laktionov.a.r.guardianreader.domain.datasource.local.room.PinedArticle
@@ -12,21 +11,20 @@ import com.gmail.laktionov.a.r.guardianreader.domain.datasource.remote.RemoteSto
 class GuardianRepository(private val remoteStorage: RemoteStorage,
                          private val localStorage: LocalStorage) : Repository {
 
-    override fun getArticles(): DataSource.Factory<Int, ArticleItem> {
-        return localStorage.getAllArticles()
-    }
+    override fun getArticles(): DataSource.Factory<Int, ArticleItem> =
+            localStorage.getAllArticles()
 
-    override fun getBoundaryCallback(): PagedList.BoundaryCallback<ArticleItem> {
-        return ArticleBoundaryCallback({ page -> remoteStorage.getAllArticles(page) }, { localStorage.saveArticles(it) })
-    }
+    override suspend fun getArticlesByPage(page: Int) =
+            remoteStorage.getAllArticles(page)
 
-    override fun getCurrentArticle(articleId: String): SingleArticleItem {
-        return localStorage.getCurrentArticle(articleId)
-    }
+    override fun saveArticles(data: List<ArticleItem>) =
+            localStorage.saveArticles(data)
 
-    override fun getPinedArticles(): LiveData<List<PinedItem>> {
-        return localStorage.getPinedArticles()
-    }
+    override fun getCurrentArticle(articleId: String): SingleArticleItem =
+            localStorage.getCurrentArticle(articleId)
+
+    override fun getPinedArticles(): LiveData<List<PinedItem>> =
+            localStorage.getPinedArticles()
 
     override fun changePinState(currentArticleId: String, isPined: Boolean): Message {
         val isSuccess = localStorage.changePinState(currentArticleId, isPined) > 0
@@ -61,9 +59,9 @@ class GuardianRepository(private val remoteStorage: RemoteStorage,
                         title = source.title,
                         section = source.section)
 
-        fun mapToSingleArticleItem(sourse: SingleArticle) =
-                SingleArticleItem(item = mapToArticleItem(sourse.article),
-                        isSelected = !sourse.pinedArticle.isEmpty())
+        fun mapToSingleArticleItem(source: SingleArticle) =
+                SingleArticleItem(item = mapToArticleItem(source.article),
+                        isSelected = !source.pinedArticle.isEmpty())
 
         fun mapToPinedArticle(articleId: String) = PinedArticle(articleId)
     }

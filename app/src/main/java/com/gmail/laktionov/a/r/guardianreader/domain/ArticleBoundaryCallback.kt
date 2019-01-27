@@ -1,36 +1,23 @@
 package com.gmail.laktionov.a.r.guardianreader.domain
 
 import android.arch.paging.PagedList
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.launch
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlinx.coroutines.channels.SendChannel
 
-class ArticleBoundaryCallback(private val remoteRequest: suspend (page: Int) -> List<ArticleItem>,
-                              private val insert: (List<ArticleItem>) -> Unit,
-                              private val bgContext: CoroutineContext = CommonPool) : PagedList.BoundaryCallback<ArticleItem>() {
+class ArticleBoundaryCallback(private val channel: SendChannel<Int>) : PagedList.BoundaryCallback<ArticleItem>() {
 
-    private var isRequestInProgress = false
     private var lastRequestedPage = 1
 
     override fun onZeroItemsLoaded() {
-        getDataAndSave()
+        channel.offer(lastRequestedPage)
     }
 
     override fun onItemAtEndLoaded(itemAtEnd: ArticleItem) {
-        getDataAndSave()
+        channel.offer(lastRequestedPage)
     }
 
-    private fun getDataAndSave() {
-        if (isRequestInProgress) return
-
-        launch(bgContext) {
-            isRequestInProgress = true
-            val response = remoteRequest(lastRequestedPage)
-            if (response.isNotEmpty()) {
-                insert(response)
-                lastRequestedPage++
-                isRequestInProgress = false
-            }
-        }
+    operator fun inc(): ArticleBoundaryCallback {
+        lastRequestedPage++
+        return this
     }
+
 }

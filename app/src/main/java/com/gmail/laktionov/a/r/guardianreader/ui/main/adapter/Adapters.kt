@@ -75,11 +75,15 @@ class ArticlesAdapter : PagedListAdapter<ArticleItem, ArticleViewHolder>(DIFF_CA
  */
 
 val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ArticleItem>() {
-    override fun areItemsTheSame(oldItem: ArticleItem?, newItem: ArticleItem?) =
-            oldItem?.articleId == newItem?.articleId
+    override fun areItemsTheSame(oldItem: ArticleItem,
+                                 newItem: ArticleItem) =
+            oldItem.articleId == newItem.articleId
 
-    override fun areContentsTheSame(oldItem: ArticleItem?, newItem: ArticleItem?) =
-            oldItem?.image == newItem?.image && oldItem?.title == newItem?.title && oldItem?.section == oldItem?.section
+    override fun areContentsTheSame(oldItem: ArticleItem,
+                                    newItem: ArticleItem) =
+            oldItem.image == newItem.image
+                    && oldItem.title == newItem.title
+                    && oldItem.section == oldItem.section
 }
 
 /**
